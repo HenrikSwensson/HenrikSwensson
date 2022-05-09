@@ -1,0 +1,34 @@
+using System;
+
+namespace Uppgift1
+{
+    /*
+     * Tänk på att samarbete mellan studenter eller ta hjälp av någon annan är förbjudet.
+     * Inlämnade lösningar skall vara egenhändigt framtagna.
+     */
+    class Program
+    {
+        static void Main(string[] args)
+        {
+           
+            int summa = Heltalsdivision(3, 1);
+            summa += Heltalsdivision(5, 2);
+            summa += Heltalsdivision(7, 2);
+            summa += Heltalsdivision(8, 2);
+
+            Console.WriteLine("den totala summan blir: {0}", summa);
+            Console.ReadLine();
+
+
+        }
+        public static int Heltalsdivision (int tal1, int tal2)
+        {
+            int a = tal1 / tal2;
+            
+            Console.WriteLine("Heltalsdivision av {0} delat med {1} är {2}", tal1, tal2, a);
+
+            return a;
+            
+        }
+    }
+}
