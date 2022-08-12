@@ -1,25 +1,126 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31005.135
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Uppgift5", "Uppgift5\Uppgift5.csproj", "{E33189C9-7F3C-4B60-865F-C1E9819EB7FB}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E33189C9-7F3C-4B60-865F-C1E9819EB7FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E33189C9-7F3C-4B60-865F-C1E9819EB7FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E33189C9-7F3C-4B60-865F-C1E9819EB7FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E33189C9-7F3C-4B60-865F-C1E9819EB7FB}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B1C0CDE3-6742-4B08-9B7A-7126942AEC00}
-	EndGlobalSection
-EndGlobal
+using System;
+
+namespace Uppgift5
+{
+    /*
+     * Tänk på att samarbete mellan studenter eller ta hjälp av någon annan är förbjudet.
+     * Inlämnade lösningar skall vara egenhändigt framtagna.
+     */
+    class Program
+    {
+        static Båtuthyrning[] båtuthyrningar = new Båtuthyrning[8];
+
+        public static void Main(string[] args)
+        {
+            FillData();
+            Console.Out.WriteLine("******************************************");
+            Console.Out.WriteLine("************* Båtuthyrning ***************");
+            Console.Out.WriteLine("******************************************");
+
+            Console.Out.WriteLine("Programmet räknar ut totalpriset för att hyra " +
+                                  "båtar, antalet dagar de hyrs ut och " +
+                                  "medelpriset per dag för alla båtar som " +
+                                  "matchar sökningen.");
+
+            // Svar a) start. 4p
+            bool fortsätt = true; // \ 1p - Fortsätt om så önskas.
+            while (fortsätt)      // /
+            {
+                Console.Out.Write("Vilka båtar skall vara med? ");    // \ 1p - Vilka båtar skall vara med.
+                string namnmönster = Console.ReadLine();              // /
+
+                HittaBåtuthyrningar(namnmönster);                     // 1p - Anropa HittaBåtuthyrningar(mönster).
+
+                Console.Out.WriteLine();
+                Console.Out.WriteLine("Skriv F eller f för att fortsätta. " +
+                                      "Annars tryck på valfri tangent.");
+                fortsätt = Console.ReadLine().ToLower() == "f";       // 1p - Skriv ut och läs in svaret om kör igen.
+            }
+            // Svar a) slut.
+        }
+
+        // Svar b) start. 3p.
+        public static void SkrivUt(Båtuthyrning bu) // 1p - Utskrift av en instans av Båtuthyrning.
+        {
+            Console.Out.Write("Båt {0}", bu.båtnamn); // 0.5p - Skriv ut båtnamnet.
+            Console.Out.Write(" uthyrd från {0} till {1}", bu.från.ToShortDateString(), bu.till.ToShortDateString()); // 0.5p - Utskrift av från och till datum.
+            Console.Out.Write(" till {0}", bu.kundnamn); // 0.5p - Uthyrd till vem.
+            Console.Out.WriteLine(". Pris: {0} kr.", bu.pris.ToString("F0")); // 0.5p - Kostnaden i hela kronor för hela uthyrningen.
+        }
+        // Svar b) slut.
+
+        // Svar c) start 7p.
+        public static void HittaBåtuthyrningar(string namnmönster) // 1p
+        {
+            int uthyrningar = 0;
+            double dagar = 0;     // 0.5p - Antalet uthyrda dagar som ingår.
+            double totalpris = 0; // 0.5p - Totalpriset som ingår-
+            Console.Out.WriteLine("Valda båtuthyrningar:");
+            foreach (Båtuthyrning bu in båtuthyrningar) // 1p - För varje Båtuthyrning bu.
+            {
+                if (bu.båtnamn.Contains(namnmönster))   // 1p - Om namnmönster ingår i bu.båtnamn:et. 
+                {
+                    Console.Out.Write("  ");
+                    SkrivUt(bu);                        // 0.5p - Skriver ut instansen av Båtuthyrning.
+                    uthyrningar++;                      // 0.5p - Ökar uthyrningar med 1.
+                    dagar += (bu.till - bu.från).TotalDays; // 1p - Räknar upp de uthyrda dagarna med bu.till - bu.från omräknat till dagar.
+                    totalpris += bu.pris; // 1p - Ökar totalPris med denna uthyrningens pris.
+                }
+            }
+            Console.Out.WriteLine();
+
+            SkrivUtSammanfattning(uthyrningar, totalpris, dagar);
+        }
+        // Svar c) slut.
+
+        // Svar d) start. 4p
+        public static void SkrivUtSammanfattning(int uthyrningar, double totalpris, double antaldagar) // 1p - Metod för att skriva ut sammanfattningen.
+        {
+            Console.Out.WriteLine("Sökningen hittade {0} uthyrningar.", uthyrningar);    // 0.5p - Antalet matchande uthyrningar.
+            if (antaldagar > 0)                                                          // 1p   - Är antaletdagar positivt? Eller är uthyrningar positivt?
+            {
+                double genomsnittsprisPerDag = totalpris / antaldagar;                   // 1p   - Genomsnittspriset per dag.
+                Console.Out.WriteLine("Totalpris var {0} kr.", totalpris.ToString("F0"));                  // \
+                Console.Out.WriteLine("Antal dagar uthyrt var {0} dagar.", antaldagar.ToString("F0"));     //  0.5p - Skriv ut totalpris i hela kronor, antalet dagar i hela dagar och medelhyran i flyttal med 2 decimaler.
+                Console.Out.WriteLine("Medeldagshyran var {0} kr.", genomsnittsprisPerDag.ToString("F2")); // /
+            }
+            Console.Out.WriteLine();
+        }
+        // Svar d) slut.
+
+        public static void FillData()
+        {
+            string båt1 = "Lucky I";
+            string båt2 = "Famous III";
+            string kund1 = "Olle";
+            string kund2 = "Bo";
+            string kund3 = "Ulla";
+            båtuthyrningar[0] = new Båtuthyrning(båt1, kund2, new DateTime(2021, 06, 13), new DateTime(2021, 06, 27, 23, 59, 59), 750);
+            båtuthyrningar[1] = new Båtuthyrning(båt1, kund2, new DateTime(2021, 07, 13), new DateTime(2021, 07, 20, 23, 59, 59), 750);
+            båtuthyrningar[2] = new Båtuthyrning(båt1, kund3, new DateTime(2021, 07, 24), new DateTime(2021, 07, 24, 23, 59, 59), 750);
+            båtuthyrningar[3] = new Båtuthyrning(båt1, kund1, new DateTime(2021, 08, 01), new DateTime(2021, 08, 14, 23, 59, 59), 750);
+            båtuthyrningar[4] = new Båtuthyrning(båt2, kund2, new DateTime(2021, 06, 01), new DateTime(2021, 06, 30, 23, 59, 59), 1000);
+            båtuthyrningar[5] = new Båtuthyrning(båt2, kund3, new DateTime(2021, 07, 01), new DateTime(2021, 07, 14, 23, 59, 59),  800);
+            båtuthyrningar[6] = new Båtuthyrning(båt2, kund1, new DateTime(2021, 07, 15), new DateTime(2021, 07, 31, 23, 59, 59), 1000);
+            båtuthyrningar[7] = new Båtuthyrning(båt2, kund2, new DateTime(2021, 08, 10), new DateTime(2021, 08, 17, 23, 59, 59), 1000);
+        }
+    }
+
+    class Båtuthyrning
+    {
+        public string båtnamn;
+        public string kundnamn;
+        public DateTime från;
+        public DateTime till;
+        public double pris;
+
+        public Båtuthyrning(string båtnamn, string kundnamn, DateTime från, DateTime till, int prisPerDag)
+        {
+            this.båtnamn = båtnamn;
+            this.kundnamn = kundnamn;
+            this.från = från;
+            this.till = till;
+            this.pris = (till - från).TotalDays * prisPerDag;
+        }
+    }
+}
