@@ -1,25 +1,170 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31005.135
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Uppgift5", "Uppgift5\Uppgift5.csproj", "{E33189C9-7F3C-4B60-865F-C1E9819EB7FB}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E33189C9-7F3C-4B60-865F-C1E9819EB7FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E33189C9-7F3C-4B60-865F-C1E9819EB7FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E33189C9-7F3C-4B60-865F-C1E9819EB7FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E33189C9-7F3C-4B60-865F-C1E9819EB7FB}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B1C0CDE3-6742-4B08-9B7A-7126942AEC00}
-	EndGlobalSection
-EndGlobal
+using System;
+
+namespace Uppgift5
+{
+    /*
+     * Tänk på att samarbete mellan studenter eller ta hjälp av någon annan är förbjudet.
+     * Inlämnade lösningar skall vara egenhändigt framtagna.
+     */
+    class Program
+    {
+        static Husvagnsuthyrning[] husvagnsuthyrningar = new Husvagnsuthyrning[8];
+
+        public static void Main(string[] args)
+        {
+            FillData();
+            Console.Out.WriteLine("***************************************");
+            Console.Out.WriteLine("********* Husvagnsuthyrning ***********");
+            Console.Out.WriteLine("***************************************");
+
+            Console.Out.WriteLine("Programmet hämtar de uthyrningar som matchar " +
+                                  "sökningen och visar dem med vissa av sina attribut.");
+            Console.Out.WriteLine("Sedan räknar det ut det sammanlagda priset" +
+                                  " och medelpriset per natt för alla uthyrningar som" +
+                                  " matchar sökningen.");
+
+            // Svar a) start. 2p
+            bool fortsätt = true;
+            while (fortsätt)
+            {
+                Console.WriteLine("Skriv in del av registeringsnummer: ");
+                string DelavRegNum = Console.ReadLine();
+
+                HittaUthyrningar(DelavRegNum);
+
+                Console.WriteLine();
+                Console.WriteLine("tryck 'F' eller 'f' för att fortsätta " +
+                    "och vilken annan tagen för att avsluta.");
+                fortsätt = Console.ReadLine().ToLower() == "f";
+
+
+
+
+
+            }
+
+
+
+            // Svar a) slut.
+        }
+
+        // Svar b) start. 2p
+
+        public static void SkrivUt(Husvagnsuthyrning hu)
+        {
+            Console.WriteLine("{0}, {1}: från {2}/{3} till {4}{5}, {6} mil, pris: {7} kr", hu.regNr, hu.kund, hu.fråndag, hu.frånmånad, hu.tilldag, hu.tillmånad, hu.mil, TotalPris(hu));
+        }
+
+
+        // Svar b) slut.
+
+        // Svar c) start. 3p
+        public static int TotalPris(Husvagnsuthyrning hu)
+        {
+            int körpris = hu.mil * hu.milpris;
+            int nattpris = hu.nattpris * AntalNätter(hu);
+            int totalpris = körpris + nattpris;
+            return totalpris;
+        }
+
+        // Svar c) slut.
+
+        // Svar d) start. 3p
+        public static int AntalNätter(Husvagnsuthyrning hu)
+        {
+            DateTime start = new DateTime(2022, hu.frånmånad, hu.fråndag);
+            DateTime end = new DateTime(2022, hu.tillmånad, hu.tilldag);
+            return (end - start).Days;
+             
+        }
+
+
+        // Svar d) slut.
+
+        // Svar e) start. 5p
+        public static void HittaUthyrningar(string DelavRegNum)
+        {
+            int totalpris = 0;
+            int totaltantalnätter = 0;
+
+            foreach(Husvagnsuthyrning hu in husvagnsuthyrningar)
+            {
+                if(hu.regNr.Contains(DelavRegNum))
+                {
+                    SkrivUt(hu);
+                    totalpris += TotalPris(hu);
+                    totaltantalnätter += AntalNätter(hu);
+                }
+                
+
+            }
+            SkrivUtSammanfattning(totalpris, totaltantalnätter);
+        }
+
+
+
+        // Svar e) slut.
+
+        // Svar f) start. 3p
+
+        public static void SkrivUtSammanfattning(int totalpris, int totaltantalnätter)
+        {
+            Console.WriteLine("Hittade totalt {0} antal nätter uthyrd.", totaltantalnätter);
+            Console.WriteLine("Det totala priset blev: {0}kr", totalpris);
+
+            if (totaltantalnätter > 0)
+            {
+                double medelpris = (double)totalpris / (double)totaltantalnätter;
+                Console.WriteLine("Medelpriset per natt blev: {0} kr", medelpris.ToString("F0"));
+            }
+
+        }
+
+
+        // Svar f) slut.
+
+        public static void FillData()
+        {
+            string namn1 = "Anka Foo";
+            string namn2 = "Bo Foo";
+            string namn3 = "Arne Bar";
+            string regnr1 = "BAR123";
+            string regnr2 = "HUS456";
+
+            husvagnsuthyrningar[0] = new Husvagnsuthyrning(regnr1, namn1, 05, 06, 05, 30, 450, 10, 64);
+            husvagnsuthyrningar[1] = new Husvagnsuthyrning(regnr1, namn2, 06, 06, 06, 20, 450, 10, 34);
+            husvagnsuthyrningar[2] = new Husvagnsuthyrning(regnr1, namn3, 06, 25, 07, 05, 450, 10, 23);
+            husvagnsuthyrningar[3] = new Husvagnsuthyrning(regnr1, namn2, 07, 10, 07, 15, 450, 10, 46);
+            husvagnsuthyrningar[4] = new Husvagnsuthyrning(regnr2, namn3, 05, 06, 05, 16, 550, 15, 53);
+            husvagnsuthyrningar[5] = new Husvagnsuthyrning(regnr2, namn1, 05, 20, 05, 30, 550, 15, 31);
+            husvagnsuthyrningar[6] = new Husvagnsuthyrning(regnr2, namn2, 06, 01, 06, 10, 550, 15, 27);
+            husvagnsuthyrningar[7] = new Husvagnsuthyrning(regnr2, namn3, 06, 15, 06, 30, 550, 15, 93);
+        }
+    }
+
+    class Husvagnsuthyrning
+    {
+        public string regNr;
+        public string kund;
+        public int frånmånad;
+        public int fråndag;
+        public int tillmånad;
+        public int tilldag;
+        public int nattpris;
+        public int milpris;
+        public int mil;
+
+        public Husvagnsuthyrning(string regNr, string kund, int frånmånad, int fråndag, int tillmånad, int tilldag, int nattpris, int milpris, int mil)
+        {
+            this.regNr = regNr;
+            this.kund = kund;
+            this.frånmånad = frånmånad;
+            this.fråndag = fråndag;
+            this.tillmånad = tillmånad;
+            this.tilldag = tilldag;
+            this.nattpris = nattpris;
+            this.milpris = milpris;
+            this.mil = mil;
+        }
+    }
+}
