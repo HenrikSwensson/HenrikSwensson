@@ -1,0 +1,100 @@
+using System;
+
+namespace Uppgift4
+{
+    /*
+     * Tänk på att samarbete mellan studenter eller ta hjälp av någon annan är förbjudet.
+     * Inlämnade lösningar skall vara egenhändigt framtagna.
+     */
+    class Program
+    {
+        static Husvagnsuthyrning[] husvagnsuthyrningar = new Husvagnsuthyrning[8];
+        static void Main(string[] args)
+        {
+            FillData();
+
+            // svar anrop.
+            Spara();
+
+            
+        // slut svar.
+    }
+
+        // svar metoder.
+        public static void Spara()
+        {
+            foreach(Husvagnsuthyrning hu in husvagnsuthyrningar)
+            {
+                SparaHusvagnsuthyrning(hu);
+            }
+        
+        }
+
+
+
+        public static void SparaHusvagnsuthyrning(Husvagnsuthyrning hu)
+        {
+            Console.WriteLine("{0} {1} 2022{2}-{3} 2022-{4}-{5} {6} {7} {8}",
+                hu.regNr, 
+                hu.kund, 
+                hu.frånmånad.ToString("00"),
+                hu.fråndag.ToString("00"),
+                hu.tillmånad.ToString("00"),
+                hu.tilldag.ToString("00"),
+                hu.nattpris,
+                hu.milpris,
+                hu.mil);
+        
+
+        }
+
+
+
+
+        // slut svar.
+
+        public static void FillData()
+        {
+            string namn1 = "Anka Foo";
+            string namn2 = "Bo Foo";
+            string namn3 = "Arne Bar";
+            string regnr1 = "BAR123";
+            string regnr2 = "HUS456";
+
+            husvagnsuthyrningar[0] = new Husvagnsuthyrning(regnr1, namn1, 05, 06, 05, 30, 450, 10, 64);
+            husvagnsuthyrningar[1] = new Husvagnsuthyrning(regnr1, namn2, 06, 06, 06, 20, 450, 10, 34);
+            husvagnsuthyrningar[2] = new Husvagnsuthyrning(regnr1, namn3, 06, 25, 07, 05, 450, 10, 23);
+            husvagnsuthyrningar[3] = new Husvagnsuthyrning(regnr1, namn2, 07, 10, 07, 15, 450, 10, 46);
+            husvagnsuthyrningar[4] = new Husvagnsuthyrning(regnr2, namn3, 05, 06, 05, 16, 550, 15, 53);
+            husvagnsuthyrningar[5] = new Husvagnsuthyrning(regnr2, namn1, 05, 20, 05, 30, 550, 15, 31);
+            husvagnsuthyrningar[6] = new Husvagnsuthyrning(regnr2, namn2, 06, 01, 06, 10, 550, 15, 27);
+            husvagnsuthyrningar[7] = new Husvagnsuthyrning(regnr2, namn3, 06, 15, 06, 30, 550, 15, 93);
+        }
+    }
+
+    class Husvagnsuthyrning
+    {
+        public string regNr;
+        public string kund;
+        public int frånmånad;
+        public int fråndag;
+        public int tillmånad;
+        public int tilldag;
+        public int nattpris;
+        public int milpris;
+        public int mil;
+
+        public Husvagnsuthyrning(string regNr, string kund, int frånmånad, int fråndag, int tillmånad, int tilldag, int nattpris, int milpris, int mil)
+        {
+            this.regNr = regNr;
+            this.kund = kund;
+            this.frånmånad = frånmånad;
+            this.fråndag = fråndag;
+            this.tillmånad = tillmånad;
+            this.tilldag = tilldag;
+            this.nattpris = nattpris;
+            this.milpris = milpris;
+            this.mil = mil;
+        }
+    }
+}
