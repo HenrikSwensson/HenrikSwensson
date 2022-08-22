@@ -1,0 +1,107 @@
+using System;
+using System.IO;
+
+namespace Uppgift4
+{
+    /*
+     * Tänk på att samarbete mellan studenter eller ta hjälp av någon annan är förbjudet.
+     * Inlämnade lösningar skall vara egenhändigt framtagna.
+     */
+    class Program
+    {
+        static Husuthyrning[] husuthyrningar = new Husuthyrning[0];
+        public static void Main(string[] args)
+        {
+            // svar b)
+            Ladda();
+
+            // slut b)
+            // svar e)
+            SkrivUt();
+
+            // slut e)
+        }
+
+        // svar a)
+        public static void Ladda()
+        {
+            StreamReader reader = new StreamReader("datafil.txt");
+            string rad;
+            while ((rad = reader.ReadLine()) != null)
+            {
+                string[] delar = rad.Split('\t');
+                Husuthyrning hu = new Husuthyrning(delar[0],
+                    delar[1],
+                    int.Parse(delar[2]),
+                    int.Parse(delar[3]),
+                    int.Parse(delar[4]),
+                    int.Parse(delar[5]),
+                    int.Parse(delar[6]));
+
+                LäggTillHusuthyrning(hu);
+
+            }
+
+        }
+
+
+
+        // slut a)
+
+        // svar c)
+        public static void SkrivUtHusuthyrning(Husuthyrning hu)
+        {
+            Console.WriteLine("{0} {1} {2} {3} {4} {5} {6}",
+                hu.adress, hu.kund, hu.frånår, hu.frånmånad, hu.tillår, hu.tillmånad, hu.månadspris);
+        }
+
+        // slut c)
+        // svar d)
+        public static void SkrivUt()
+        {
+            foreach(Husuthyrning hu in husuthyrningar)
+            {
+                SkrivUtHusuthyrning(hu);
+            }
+
+
+        }
+
+        // slut d)
+        HÄRRR--
+        public static void LäggTillHusuthyrning(Husuthyrning ny)
+        {
+            Husuthyrning[] nyVektor = new Husuthyrning[husuthyrningar.Length + 1];
+            for (int i = 0; i < husuthyrningar.Length; i++)
+            {
+                nyVektor[i] = husuthyrningar[i];
+            }
+            nyVektor[husuthyrningar.Length] = ny;
+            husuthyrningar = nyVektor;
+
+        }
+        TILL HÄR---
+    }
+
+    class Husuthyrning
+    {
+        public string adress;
+        public string kund;
+        public int frånmånad;
+        public int frånår;
+        public int tillmånad;
+        public int tillår;
+        public int månadspris;
+
+        public Husuthyrning(string adress, string kund, int frånmånad, int frånår, int tillmånad, int tillår, int månadspris)
+        {
+            this.adress = adress;
+            this.kund = kund;
+            this.frånmånad = frånmånad;
+            this.frånår = frånår;
+            this.tillmånad = tillmånad;
+            this.tillår = tillår;
+            this.månadspris = månadspris;
+        }
+    }
+}
