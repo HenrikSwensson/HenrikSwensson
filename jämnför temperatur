@@ -1,0 +1,60 @@
+using System;
+
+namespace Uppgift3
+{
+    /*
+     * Tänk på att samarbete mellan studenter eller ta hjälp av någon annan är förbjudet.
+     * Inlämnade lösningar skall vara egenhändigt framtagna.
+     */
+    class Program
+        
+    {
+        static string[] ort = { "Kalmar", "Göteborg", "Karlstad" };
+        static void Main()
+        {
+            double[] temperatur = new double[3];
+            for (int i = 0; i < ort.Length; i++)
+            {
+                Console.WriteLine("Temperaturen i " + ort[i] + ": ");
+                while (!double.TryParse(Console.ReadLine(), out temperatur[i]))
+                {
+                    Console.WriteLine("Fel, försök igen.");
+                }
+            }
+
+            string kallast = "";
+            if (temperatur[0] < temperatur[1] && temperatur[0] < temperatur[2])
+            {
+                kallast = ort[0];
+
+            }
+            else if (temperatur[1] < temperatur[0] && temperatur[1] < temperatur[2])
+            {
+                kallast = ort[1];
+            }
+            else if (temperatur[2] < temperatur[0] && temperatur[2] < temperatur[1])
+            {
+                kallast = ort[2];
+
+            }
+
+            if (kallast != "")
+            {
+                Console.WriteLine("Den kallste orten är {0}.", kallast);
+            }
+            else
+            {
+                Console.WriteLine("Det är lika kallt på 2 eller 3 av dem kallaste orterna.");
+            }
+        }
+
+
+            }
+            }
+
+
+
+        
+    
+
+
