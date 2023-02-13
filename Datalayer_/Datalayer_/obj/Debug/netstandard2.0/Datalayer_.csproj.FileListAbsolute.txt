@@ -1,0 +1,5 @@
+F:\Dokument\Datalayer_\Datalayer_\bin\Debug\netstandard2.0\Datalayer_.deps.json
+F:\Dokument\Datalayer_\Datalayer_\bin\Debug\netstandard2.0\Datalayer_.dll
+F:\Dokument\Datalayer_\Datalayer_\obj\Debug\netstandard2.0\Datalayer_.csprojAssemblyReference.cache
+F:\Dokument\Datalayer_\Datalayer_\obj\Debug\netstandard2.0\Datalayer_.AssemblyInfoInputs.cache
+F:\Dokument\Datalayer_\Datalayer_\obj\Debug\netstandard2.0\Datalayer_.AssemblyInfo.cs
